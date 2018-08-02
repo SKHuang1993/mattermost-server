@@ -118,30 +118,41 @@ func TestUserIsValid(t *testing.T) {
 	}
 
 	user.Id = NewId()
-	err := user.IsValid()
-	require.True(t, HasExpectedUserIsValidError(err, "create_at", user.Id), "expected user is valid error: %s", err.Error())
+	if err := user.IsValid(); !HasExpectedUserIsValidError(err, "create_at", user.Id) {
+		t.Fatal(err)
+	}
 
 	user.CreateAt = GetMillis()
-	err = user.IsValid()
-	require.True(t, HasExpectedUserIsValidError(err, "update_at", user.Id), "expected user is valid error: %s", err.Error())
+	if err := user.IsValid(); !HasExpectedUserIsValidError(err, "update_at", user.Id) {
+		t.Fatal(err)
+	}
 
 	user.UpdateAt = GetMillis()
-	err = user.IsValid()
-	require.True(t, HasExpectedUserIsValidError(err, "username", user.Id), "expected user is valid error: %s", err.Error())
+	if err := user.IsValid(); !HasExpectedUserIsValidError(err, "username", user.Id) {
+		t.Fatal(err)
+	}
 
 	user.Username = NewId() + "^hello#"
-	err = user.IsValid()
-	require.True(t, HasExpectedUserIsValidError(err, "username", user.Id), "expected user is valid error: %s", err.Error())
+	if err := user.IsValid(); !HasExpectedUserIsValidError(err, "username", user.Id) {
+		t.Fatal(err)
+	}
 
 	user.Username = NewId()
-	user.Email = strings.Repeat("01234567890", 20)
-	err = user.IsValid()
-	require.NotNil(t, user.IsValid())
+	if err := user.IsValid(); !HasExpectedUserIsValidError(err, "email", user.Id) {
+		t.Fatal(err)
+	}
 
-	user.Email = strings.Repeat("a", 128)
+	user.Email = strings.Repeat("01234567890", 20)
+	if err := user.IsValid(); !HasExpectedUserIsValidError(err, "email", user.Id) {
+		t.Fatal(err)
+	}
+
+	user.Email = "user@example.com"
+
 	user.Nickname = strings.Repeat("a", 65)
-	err = user.IsValid()
-	require.True(t, HasExpectedUserIsValidError(err, "nickname", user.Id), "expected user is valid error: %s", err.Error())
+	if err := user.IsValid(); !HasExpectedUserIsValidError(err, "nickname", user.Id) {
+		t.Fatal(err)
+	}
 
 	user.Nickname = strings.Repeat("a", 64)
 	if err := user.IsValid(); err != nil {

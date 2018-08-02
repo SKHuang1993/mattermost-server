@@ -73,18 +73,18 @@ func testComplianceExport(t *testing.T, ss store.Store) {
 	t1 := &model.Team{}
 	t1.DisplayName = "DisplayName"
 	t1.Name = "zz" + model.NewId() + "b"
-	t1.Email = model.NewId() + "@nowhere.com"
+	t1.Email = MakeEmail()
 	t1.Type = model.TEAM_OPEN
 	t1 = store.Must(ss.Team().Save(t1)).(*model.Team)
 
 	u1 := &model.User{}
-	u1.Email = model.NewId()
+	u1.Email = MakeEmail()
 	u1.Username = model.NewId()
 	u1 = store.Must(ss.User().Save(u1)).(*model.User)
 	store.Must(ss.Team().SaveMember(&model.TeamMember{TeamId: t1.Id, UserId: u1.Id}, -1))
 
 	u2 := &model.User{}
-	u2.Email = model.NewId()
+	u2.Email = MakeEmail()
 	u2.Username = model.NewId()
 	u2 = store.Must(ss.User().Save(u2)).(*model.User)
 	store.Must(ss.Team().SaveMember(&model.TeamMember{TeamId: t1.Id, UserId: u2.Id}, -1))
@@ -235,18 +235,18 @@ func testComplianceExportDirectMessages(t *testing.T, ss store.Store) {
 	t1 := &model.Team{}
 	t1.DisplayName = "DisplayName"
 	t1.Name = "zz" + model.NewId() + "b"
-	t1.Email = model.NewId() + "@nowhere.com"
+	t1.Email = MakeEmail()
 	t1.Type = model.TEAM_OPEN
 	t1 = store.Must(ss.Team().Save(t1)).(*model.Team)
 
 	u1 := &model.User{}
-	u1.Email = model.NewId()
+	u1.Email = MakeEmail()
 	u1.Username = model.NewId()
 	u1 = store.Must(ss.User().Save(u1)).(*model.User)
 	store.Must(ss.Team().SaveMember(&model.TeamMember{TeamId: t1.Id, UserId: u1.Id}, -1))
 
 	u2 := &model.User{}
-	u2.Email = model.NewId()
+	u2.Email = MakeEmail()
 	u2.Username = model.NewId()
 	u2 = store.Must(ss.User().Save(u2)).(*model.User)
 	store.Must(ss.Team().SaveMember(&model.TeamMember{TeamId: t1.Id, UserId: u2.Id}, -1))
@@ -332,14 +332,14 @@ func testMessageExportPublicChannel(t *testing.T, ss store.Store) {
 	team := &model.Team{
 		DisplayName: "DisplayName",
 		Name:        "zz" + model.NewId() + "b",
-		Email:       model.NewId() + "@nowhere.com",
+		Email:       MakeEmail(),
 		Type:        model.TEAM_OPEN,
 	}
 	team = store.Must(ss.Team().Save(team)).(*model.Team)
 
 	// and two users that are a part of that team
 	user1 := &model.User{
-		Email:    model.NewId(),
+		Email:    MakeEmail(),
 		Username: model.NewId(),
 	}
 	user1 = store.Must(ss.User().Save(user1)).(*model.User)
@@ -349,7 +349,7 @@ func testMessageExportPublicChannel(t *testing.T, ss store.Store) {
 	}, -1))
 
 	user2 := &model.User{
-		Email:    model.NewId(),
+		Email:    MakeEmail(),
 		Username: model.NewId(),
 	}
 	user2 = store.Must(ss.User().Save(user2)).(*model.User)
@@ -433,14 +433,14 @@ func testMessageExportPrivateChannel(t *testing.T, ss store.Store) {
 	team := &model.Team{
 		DisplayName: "DisplayName",
 		Name:        "zz" + model.NewId() + "b",
-		Email:       model.NewId() + "@nowhere.com",
+		Email:       MakeEmail(),
 		Type:        model.TEAM_OPEN,
 	}
 	team = store.Must(ss.Team().Save(team)).(*model.Team)
 
 	// and two users that are a part of that team
 	user1 := &model.User{
-		Email:    model.NewId(),
+		Email:    MakeEmail(),
 		Username: model.NewId(),
 	}
 	user1 = store.Must(ss.User().Save(user1)).(*model.User)
@@ -450,7 +450,7 @@ func testMessageExportPrivateChannel(t *testing.T, ss store.Store) {
 	}, -1))
 
 	user2 := &model.User{
-		Email:    model.NewId(),
+		Email:    MakeEmail(),
 		Username: model.NewId(),
 	}
 	user2 = store.Must(ss.User().Save(user2)).(*model.User)
@@ -536,14 +536,14 @@ func testMessageExportDirectMessageChannel(t *testing.T, ss store.Store) {
 	team := &model.Team{
 		DisplayName: "DisplayName",
 		Name:        "zz" + model.NewId() + "b",
-		Email:       model.NewId() + "@nowhere.com",
+		Email:       MakeEmail(),
 		Type:        model.TEAM_OPEN,
 	}
 	team = store.Must(ss.Team().Save(team)).(*model.Team)
 
 	// and two users that are a part of that team
 	user1 := &model.User{
-		Email:    model.NewId(),
+		Email:    MakeEmail(),
 		Username: model.NewId(),
 	}
 	user1 = store.Must(ss.User().Save(user1)).(*model.User)
@@ -553,7 +553,7 @@ func testMessageExportDirectMessageChannel(t *testing.T, ss store.Store) {
 	}, -1))
 
 	user2 := &model.User{
-		Email:    model.NewId(),
+		Email:    MakeEmail(),
 		Username: model.NewId(),
 	}
 	user2 = store.Must(ss.User().Save(user2)).(*model.User)
@@ -614,14 +614,14 @@ func testMessageExportGroupMessageChannel(t *testing.T, ss store.Store) {
 	team := &model.Team{
 		DisplayName: "DisplayName",
 		Name:        "zz" + model.NewId() + "b",
-		Email:       model.NewId() + "@nowhere.com",
+		Email:       MakeEmail(),
 		Type:        model.TEAM_OPEN,
 	}
 	team = store.Must(ss.Team().Save(team)).(*model.Team)
 
 	// and three users that are a part of that team
 	user1 := &model.User{
-		Email:    model.NewId(),
+		Email:    MakeEmail(),
 		Username: model.NewId(),
 	}
 	user1 = store.Must(ss.User().Save(user1)).(*model.User)
@@ -631,7 +631,7 @@ func testMessageExportGroupMessageChannel(t *testing.T, ss store.Store) {
 	}, -1))
 
 	user2 := &model.User{
-		Email:    model.NewId(),
+		Email:    MakeEmail(),
 		Username: model.NewId(),
 	}
 	user2 = store.Must(ss.User().Save(user2)).(*model.User)
@@ -641,7 +641,7 @@ func testMessageExportGroupMessageChannel(t *testing.T, ss store.Store) {
 	}, -1))
 
 	user3 := &model.User{
-		Email:    model.NewId(),
+		Email:    MakeEmail(),
 		Username: model.NewId(),
 	}
 	user3 = store.Must(ss.User().Save(user3)).(*model.User)
