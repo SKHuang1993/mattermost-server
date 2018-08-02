@@ -113,6 +113,7 @@ func TestHookMessageWillBePosted(t *testing.T) {
 			}
 
 			func (p *MyPlugin) MessageWillBePosted(c *plugin.Context, post *model.Post) (*model.Post, string) {
+				post.Message = "ignored"
 				return post, "rejected"
 			}
 
